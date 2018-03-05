@@ -1,76 +1,50 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>MoviesApp</title>
 </head>
 <body>
-   <input type="text" id="usertext">
-   <button onClick="getData()">SEARCH</button>
-    <button onClick="getFav()">Watch</button>
-   <p id="mydata"> </p> 
-   <p id="message"></p>
-   <p id="output"></p>
-   
-   <script type="text/javascript">
-   var dataObj;
-function getData(){
-    var xmlHttp = new XMLHttpRequest();
-    var word= document.getElementById("usertext").value;
+	<div class="py-5 text-white bg-dark text-center">
+   <div class="container">
+     <div class="row">
+       <div class="col-md-12">
+         <h1>MoviesApp</h1>
+         <p class="lead mb-4">ENTERTAINMENT ENTERTAINMENT ENTERTAINMENT</p>
+          <p class="lead mb-4">Find your entertainment over here</p>
+         <form class="form-inline justify-content-center">
+           <div class="input-group my-2 w-50">
+           <input type="text" class="form-control mr-3 my-1" id="usertext" placeholder="Movie name"> </div>
+           <button type="button" class="btn btn-secondary btn-lg mr-2" onclick="getData()">SEARCH</button>
+           <button type="button" class="btn btn-secondary btn-lg" onclick="getFav()">WATCH FAVOURITE</button> 
+         </form>     
+    <div class="py-5 text-center" id="message"></div>
+       </div>
+     </div>
+   </div>
+ </div>
+<div class="container" id ="apiresult">
+<!-- <div id="apiresult">hi api</div> -->
+</div>
+    
+ <div class="container" id ="favresult">
+<!-- <div  id="favresult">bye fav</div> -->
+</div>
+    
 
-   
-    var url = "https://api.themoviedb.org/3/search/movie?api_key=628feb1e5d19aa715bd6f0824546c81d&query="+word;
-    xmlHttp.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200){
-            var myArr= JSON.parse(this.responseText);
-            dataObj= myArr;
-           for(var i in dataObj.results)
-        	   { 
-        	   	 var info="Title = " +
-                  dataObj.results[i].title + "<br> Ratings =" + dataObj.results[i].vote_average +
-                  "<br> Release Date =" + dataObj.results[i].release_date + "<br> Overviews =" +
-                  dataObj.results[i].overview +"<br>"+
-                  "<button onClick=sendData("+i+")>Add To Fav</button>"+"<br>";
-        	      document.getElementById("mydata").insertAdjacentHTML('afterend',info);
-        	   }
-           
-}  
-    };
-    xmlHttp.open("GET",url,true);
-    xmlHttp.send();
-  }
-  
-  
-  function sendData(i){
-	  var xmlHttp = new XMLHttpRequest();
-	  var params = "title=" +dataObj.results[i].title+ "&rating=" +dataObj.results[i].vote_average+ "&releaseDate=" +dataObj.results[i].release_date+ "&overview="+dataObj.results[i].overview;
-	  var url1= "http://localhost:8081/MoviesApp/fav?"+params;
-	  xmlHttp.open("GET",url1,true);
-	  xmlHttp.send();
-	  
-	  xmlHttp.onreadystatechange = function() {
-	        if(this.readyState == 4 && this.status == 200){
-	  			var msg=this.responseText; 
-	  			document.getElementById("message").innerHTML=msg;	
-	        }
-	  };            
-  }
-  
-  function getFav(){
-	  
-	  var xmlHttp = new XMLHttpRequest();
-	  var url1= "http://localhost:8081/MoviesApp/Favwatch";
-	  xmlHttp.open("GET",url1,true);
-	  xmlHttp.send();
-	  
-	  xmlHttp.onreadystatechange = function() {
-	        if(this.readyState == 4 && this.status == 200){
-	  			var watchfav=this.responseText; 
-	  			//alert(watchfav);
-	  			document.getElementById("output").innerHTML=watchfav;	
-	        }
-	  };            
-  }
-</script>
+
+    <script type="text/javascript" src="index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <!-- <input type="text" id="usertext">
+   <button onClick="getData()">SEARCH</button>
+    <button onClick="getFav()">Watch</button> -->
+    
+  <!--  <p id="mydata"> </p> 
+   <p id="message"></p>
+   <p id="output"></p> -->
+   <script src="index.js"></script>
 </body>
 </html>

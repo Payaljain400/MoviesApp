@@ -1,9 +1,10 @@
 package com.movie;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import org.json.simple.*;
-
+import org.json.simple.parser.JSONParser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,10 +41,17 @@ public class fav extends HttpServlet {
 		String releaseDate=request.getParameter("releaseDate");
 		String overview=request.getParameter("overview");
 		JSONObject object=new JSONObject();
-		
+		JSONParser parser= new JSONParser();
 		try {
+			try {
+				JSONObject count1 = new JSONObject();
+				count1 = (JSONObject) parser.parse(new FileReader("/home/sapient/Downloads/sts-bundle/sts-3.9.2.RELEASE/STS_Workspace/MoviesApp/src/com/movie/favo.json"));
+				count = Integer.parseInt(String.valueOf(count1.get("count")));
+			} catch (Exception e) {
+				count=0;
+			}
 			if(count<10) {
-	            count++;
+				count++;
 		object.put("title",title);
 		object.put("rating",rating);
 		object.put("releaseDate",releaseDate);
@@ -52,19 +60,15 @@ public class fav extends HttpServlet {
 		    jsonFileWriter = new FileWriter("/home/sapient/Downloads/sts-bundle/sts-3.9.2.RELEASE/STS_Workspace/MoviesApp/src/com/movie/favo.json");
 		    
 		    jarr.add(object);
-		    
-		    
 		    object1.put("movie",jarr);
-		    
-		   // System.out.println(object1);
+		    object1.put("count",count);
 		    jsonFileWriter.write(object1.toString());
-			
 		    
 		    response.setContentType("text/plain");
-            response.getWriter().write("Success");
+            response.getWriter().write("Successfully added to favourite");
             }
 			else {
-				response.getWriter().write("can only add 10 fav");
+				response.getWriter().write("can only add 10 movies to favourite");
 			}
 		    }
 		catch (Exception e) {

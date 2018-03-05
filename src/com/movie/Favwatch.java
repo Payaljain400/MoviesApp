@@ -38,15 +38,13 @@ public class Favwatch extends HttpServlet {
 		FileReader fs=new FileReader("/home/sapient/Downloads/sts-bundle/sts-3.9.2.RELEASE/STS_Workspace/MoviesApp/src/com/movie/favo.json");
 		
 		try {
-			//System.out.println("in favwatch servlet");
 			Object obj1= parser.parse(fs);
-			//System.out.println("i servlet");
 			 JSONObject jObj = (JSONObject)obj1;
-			 System.out.println(jObj.get("movie"));
+			 //System.out.println(jObj.get("movie"));
 			 response.getWriter().write(jObj.toString());
 			
 		} catch (ParseException e) {
-			System.out.println("catch");
+			//System.out.println("catch");
 			e.printStackTrace();
 		} 
 		finally {
